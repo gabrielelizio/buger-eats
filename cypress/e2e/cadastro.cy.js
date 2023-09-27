@@ -1,9 +1,11 @@
+import { faker } from "@faker-js/faker";
+
 describe('Cadastro',function(){
 
     beforeEach(() => {
         cy.visit('/')
     });
-    it.only('Usuario deve setornar um entregador',function(){
+    it('Usuario deve setornar um entregador',function(){
 
         cy.get('a[href="/deliver"]').click()
         cy.get('#page-deliver > form > h1').should('have.text','Cadastre-se para  fazer entregas')  
@@ -18,7 +20,7 @@ describe('Cadastro',function(){
                 rua: 'Rua Joaquim Floriano',
                 numero:'1000',
                 complemento:'Ap 142',
-                bairro: 'Itaim Bibi',
+                bairro: faker.random.words(3),
                 cidade_uf:  'São Paulo/SP'
             },
             metodo_entrega: 'Moto',
@@ -43,9 +45,13 @@ describe('Cadastro',function(){
         cy.contains('.delivery-method li',entregador.metodo_entrega).click()
 
         cy.get('input[accept^="image"]').attachFile(entregador.cnh)
-
-
-
+        cy.get('.button-success').click();
+        cy.get('.swal2-confirm').should('contain','Fechar').click()
+        
+        cy.url().should(
+            'be.equal',
+            `${Cypress.config("baseUrl")}/`
+          )
 
     })
 })
