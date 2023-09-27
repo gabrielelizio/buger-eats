@@ -15,8 +15,9 @@
 
 // Import commands.js using ES2015 syntax:
 import './commands'
+import './gui/cadastro'
 import 'cypress-file-upload'
 import '@faker-js/faker'
-
+const faker = require ('faker-br')
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
